@@ -34,7 +34,7 @@ def train():
 
   with tf.name_scope('input_reshape'):
     image_shaped_input = tf.reshape(x, [-1, 28, 28, 1])
-    tf.image_summary('input', image_shaped_input, 10)
+    tf.summary.image('input', image_shaped_input, 10)
 
   # We can't initialize these variables to 0 - the network will get stuck.
   def weight_variable(shape):
@@ -51,13 +51,13 @@ def train():
     """Attach a lot of summaries to a Tensor."""
     with tf.name_scope('summaries'):
       mean = tf.reduce_mean(var)
-      tf.scalar_summary('mean/' + name, mean)
+      tf.summary.scalar('mean/' + name, mean)
       with tf.name_scope('stddev'):
         stddev = tf.sqrt(tf.reduce_mean(tf.square(var - mean)))
-      tf.scalar_summary('stddev/' + name, stddev)
-      tf.scalar_summary('max/' + name, tf.reduce_max(var))
-      tf.scalar_summary('min/' + name, tf.reduce_min(var))
-      tf.histogram_summary(name, var)
+      tf.summary.scalar('stddev/' + name, stddev)
+      tf.summary.scalar('max/' + name, tf.reduce_max(var))
+      tf.summary.scalar('min/' + name, tf.reduce_min(var))
+      tf.summary.histogram(name, var)
 
   def nn_layer(input_tensor, input_dim, output_dim, layer_name, act=tf.nn.relu):
     """Reusable code for making a simple neural net layer.
