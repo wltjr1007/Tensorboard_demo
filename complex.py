@@ -85,7 +85,7 @@ def train():
 
   with tf.name_scope('dropout'):
     keep_prob = tf.placeholder(tf.float32)
-    tf.scalar_summary('dropout_keep_probability', keep_prob)
+    tf.summary.scalar('dropout_keep_probability', keep_prob)
     dropped = tf.nn.dropout(hidden1, keep_prob)
 
   y = nn_layer(dropped, 500, 10, 'layer2', act=tf.nn.softmax)
@@ -94,7 +94,7 @@ def train():
     diff = y_ * tf.log(y)
     with tf.name_scope('total'):
       cross_entropy = -tf.reduce_mean(diff)
-    tf.scalar_summary('cross entropy', cross_entropy)
+    tf.summary.scalar('cross entropy', cross_entropy)
 
   with tf.name_scope('train'):
     train_step = tf.train.AdamOptimizer(FLAGS.learning_rate).minimize(
@@ -105,7 +105,7 @@ def train():
       correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
     with tf.name_scope('accuracy'):
       accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-    tf.scalar_summary('accuracy', accuracy)
+    tf.summary.scalar('accuracy', accuracy)
 
   # Merge all the summaries and write them out to /tmp/mnist_logs (by default)
   merged = tf.merge_all_summaries()
