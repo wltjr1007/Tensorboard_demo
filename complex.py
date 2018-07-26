@@ -76,9 +76,9 @@ def train():
         variable_summaries(biases, layer_name + '/biases')
       with tf.name_scope('Wx_plus_b'):
         preactivate = tf.matmul(input_tensor, weights) + biases
-        tf.histogram_summary(layer_name + '/pre_activations', preactivate)
+        tf.summary.histogram(layer_name + '/pre_activations', preactivate)
       activations = act(preactivate, name='activation')
-      tf.histogram_summary(layer_name + '/activations', activations)
+      tf.summary.histogram(layer_name + '/activations', activations)
       return activations
 
   hidden1 = nn_layer(x, 784, 500, 'layer1')
